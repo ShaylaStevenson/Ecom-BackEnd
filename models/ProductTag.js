@@ -8,13 +8,13 @@ ProductTag.init(
   // define columns
   {
     id: {
-      DataTypes: INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
       autoIncrement: true,
     },
     tag_name: {
-      DataTypes: STRING,
+      type: DataTypes.STRING,
     },
   },
   {

@@ -11,25 +11,25 @@ Product.init(
   // define columns
   {
     id: {
-      DataTypes: INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
     },
     
     product_name: {
-      DataTypes: STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     price: {
-      DataTypes: DECIMAL,
+      type: DataTypes.DECIMAL,
       allowNull: false,
       validate: {
         isDecimal: true,
       },
     },
     stock: {
-      DataTypes: INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 10,
       validate: {
@@ -37,7 +37,7 @@ Product.init(
       },
     },
     category_id: {
-      DataTypes: INTEGER,
+      type: DataTypes.INTEGER,
       // reference the category model's id activity 21
       references: {
         model: 'category',
