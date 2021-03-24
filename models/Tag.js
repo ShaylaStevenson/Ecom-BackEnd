@@ -13,21 +13,8 @@ Tag.init(
       allowNull: false,
       autoIncrement: true,
     },
-    product_id: {
-      type: DataTypes.INTEGER,
-      // refernece product model's id
-      references: {
-        model: 'product',
-        key: 'id',
-      },
-    },
-    tag_id:{
-      type: DataTypes.INTEGER,
-      // refernece tag model's id
-      references: {
-        model: 'tag',
-        key: 'id',
-      },
+    tag_name: {
+      type: DataTypes.STRING,
     },
   },
   {
