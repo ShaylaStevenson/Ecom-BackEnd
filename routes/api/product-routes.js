@@ -5,21 +5,20 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get all products
 router.get('/', async (req, res) => {
-
   // find all products
   // be sure to include its associated Category and Tag data
 
-  // https://sequelize.org/master/manual/model-querying-basics.html
+  // referenced: https://sequelize.org/master/manual/model-querying-basics.html
   try {
     const productData = await Product.findAll({
       include: [
         {
           model: Category,
-          //attributes: ['category_name']
         },
         {
           model: Tag,
-          //attributes: ['tag_name']
+          through: ProductTag,
+          as: 'tags'
         },
       ],
     });
@@ -28,6 +27,7 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }  
 });
+
 // get one product
 router.get('/:id', async (req, res) => {
   // find a single product by its `id`
@@ -42,7 +42,8 @@ router.get('/:id', async (req, res) => {
         },
         {
           model: Tag,
-          //through: ProductTag,
+          through: ProductTag,
+          as: 'tags'
         },
       ],
     });
@@ -67,14 +68,7 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
-  Product.create(
-    {
-      product_name: req.body.product_name,
-      price: req.body.price,
-      stock: req.body.stock,
-      tagIds: req.body.tag_id
-    },
-  )
+  Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
