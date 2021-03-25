@@ -52,19 +52,64 @@ router.post('/', async (req, res) => {
 
   // activity 28
   try {
-    const categoryData = await Category.create(req.body);
+    const categoryData = await Category.create(
+      {
+        category_name: req.body.category_name,
+      }
+    );
     res.status(200).json(categoryData);
   } catch (err) {
     res.status(400).json(err);
   }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   // update a category by its `id` value
+
+  // activity 7 and 28
+  try {
+    const updatedCategory = await Category.update(
+      {
+        category_name: req.body.category_name,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+
+    if (!updatedCategory) {
+      res.status(404).json({ message: 'No Category found with this id!' });
+      return;
+    }
+
+    res.status(200).json(updatedCategory);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete a category by its `id` value
+
+  // activity 28
+  try {
+    const categoryData = await Category.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+
+    if (!categoryData) {
+      res.status(404).json({ message: 'No Category found with this id!' });
+      return;
+    }
+
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
