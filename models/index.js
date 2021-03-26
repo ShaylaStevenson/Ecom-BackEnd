@@ -9,14 +9,13 @@ const ProductTag = require('./ProductTag');
 // activity 21
 Product.belongsTo(Category, {
   foreignKey: 'category_id',
+  onDelete: 'CASCADE'
 });
 
 // Categories have many Products
 // activity 23
 Category.hasMany(Product, {
-  // when this fk is active, I get an error when deleting categories with products
-  //foreignKey: 'category_id',
-  onDelete: 'CASCADE'
+  foreignKey: 'category_id',
 });
 
 // Products belongToMany Tags (through ProductTag)
